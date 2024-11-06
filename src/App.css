@@ -1,0 +1,497 @@
+/* App.css */
+
+/* Navbar styles */
+body{
+  background-color: #A0A4A8;
+}
+.navbar {
+  display:flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #d62644;
+  color: #212121;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.nav-link:hover {
+  color: #212121;
+}
+.landing-page h1,p{
+  color: #ddd;
+}
+
+/* Main content styles */
+.main-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.button-container {
+  margin-top: 1.5rem;
+}
+
+.button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #d62644;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #212121;
+}
+
+/* Footer styles */
+.footer {
+  margin-top: 259px;
+  padding: 1rem;
+  text-align: center;
+  background-color: #d62644;
+  color: #212121;
+}
+
+.footer-link {
+  color: #333;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+/* App.css */
+
+.signup-container {
+  max-width: 400px;
+  background-color: #ffffff;
+  /* margin: 0 auto; */
+  padding: 20px;
+  margin-left: 400px;
+  margin-top: 50px;
+  margin-bottom: -240px;
+  text-align: center;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+}
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.signup-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid;
+  border-radius: 4px;
+}
+
+.signup-button {
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #d62644;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+  background-color: #FF7F7F;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+.login-link {
+  color: #FF7F7F;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+.login-container {
+  background-color: #ffffff;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 40px;
+  border-radius: 8px;
+  border: 1px solid #ffffff;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.login-form input,
+.login-form select,
+.login-form button {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: 1px solid ;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.login-form button {
+  background-color: #d62644;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #FF7F7F;
+}
+
+.signup-link {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.signup-link a {
+  color: #FF7F7F;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+}
+.about-us {
+  max-width: 500px;
+  margin: 90px auto;
+  padding: 40px;
+  background-color: #212121;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.about-us h1 {
+  font-size: 2.5rem;
+  color: #FF7F7F;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.about-us p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 1rem 0;
+  color: #A0A4A8;
+}
+
+.about-us p:first-of-type {
+  margin-top: 1.5rem;
+  font-weight: 500;
+}
+
+.about-us p:last-of-type {
+  margin-bottom: 1.5rem;
+  color: #A0A4A8;
+}
+
+.about-us h1::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 3px;
+  background-color: #FF7F7F;
+  margin: 0.8rem auto;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .about-us h1 {
+      font-size: 2rem;
+  }
+
+  .about-us p {
+      font-size: 1rem;
+  }
+}
+
+.dashboard {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  /* background-color: #ffffff; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid #FF7F7F;
+
+}
+
+h2, h3, h4 {
+  color: #212121;
+  text-align: center;
+}
+
+/* Stats section */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.stats p {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table th,
+table td {
+  padding: 12px;
+  border: 1px solid #FF7F7F;
+  text-align: left;
+}
+
+table th {
+  background-color: #212121;
+  color: white;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+
+/* Edit button and save button styling */
+button {
+  padding: 8px 12px;
+  background-color: #FF7F7F;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #212121;
+}
+
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+/* LeaderDashboard.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0e0c0c;
+  margin: 0;
+  padding: 0;
+}
+
+#leader-dashboard {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #A0A4A8;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #212121;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #FF7F7F;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color:#212121;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+h3, h4 {
+  color: #555;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f1f1f1;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+li h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+li p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.add-player-btn {
+  margin-top: 10px;
+}
+
+
+
+.start-bidding-btn {
+  background-color: #FF4500;
+}
+
+.start-bidding-btn:hover {
+  background-color: #FF7F7F;
+}
+
+/* src/components/PaymentPage.css */
+
+.payment-page {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-top: 0.3rem;
+}
+
+.card-element {
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.pay-button {
+  padding: 0.8rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #5c67f2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pay-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.pay-button:hover:not(:disabled) {
+  background-color: #4a5ccd;
+}
+
+.error-message {
+  color: #ff3860;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.success-message {
+  color: #23d160;
+  text-align: center;
+  margin-top: 1rem;
+}
