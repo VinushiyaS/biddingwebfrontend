@@ -1,4 +1,3 @@
-// src/api.js
 import axios from 'axios';
 
 const API = axios.create({
@@ -8,8 +7,8 @@ const API = axios.create({
 export const registerUser = (userData) => API.post('/auth/register', userData);
 export const loginUser = (userData) => API.post('/auth/login', userData);
 export const fetchAuctions = () => API.get('/auctions');
-export const fetchLeaderAuctions = (leaderId) => API.get(`/auctions/leader/${leaderId}`);
-export const createAuction = (auctionData) => API.post('/auction/create', auctionData,{
+export const fetchLeaderAuctions = (leaderEmail) => API.get(`/auctions/leader/${leaderEmail}`);
+export const createAuction = (auctionData) => API.post('/auctions/create-auction', auctionData, {
     headers: {
         'Content-Type': 'multipart/form-data', // This is needed for file uploads
     },

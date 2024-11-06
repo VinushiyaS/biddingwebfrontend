@@ -7,6 +7,9 @@ import Footer from './Footer';
 const LandingPage = () => {
     return (
         <div className="landing-page">
+            <div className="landing-image">
+                <img src="./images/crickpost-removebg-preview.png" alt="Cricket Auction" className="landing-image" />
+            </div>
             <main className="main-content">
                 <h1>Welcome to CrickBidders</h1>
                 <p>Your ultimate platform for cricket auctions!</p>

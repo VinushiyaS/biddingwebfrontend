@@ -38,8 +38,11 @@ body{
 
 /* Main content styles */
 .main-content {
+  flex: 1;
+  padding: 1rem;
   text-align: center;
-  padding: 2rem;
+  margin-left: 400px;
+  margin-top: -480px;
 }
 
 .button-container {
@@ -297,6 +300,12 @@ table tbody tr:hover {
   background-color: #f1f1f1;
 }
 
+.landing-image {
+  width: 100%;
+  height: auto;
+  max-width: 500px; /* Adjust this as needed */
+  margin-bottom: 7px;
+}
 
 /* Edit button and save button styling */
 button {

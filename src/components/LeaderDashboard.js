@@ -1,4 +1,3 @@
-// src/components/LeaderDashboard.js
 import React, { useState, useEffect } from 'react';
 import { fetchLeaderAuctions, createAuction } from '../api';
 
@@ -18,9 +17,9 @@ const LeaderDashboard = () => {
     // Fetch existing auctions for this leader on component mount
     useEffect(() => {
         const getLeaderAuctions = async () => {
-            const leaderId = "leader-id"; // Replace with actual leader ID from context or props
+            const leaderEmail = "leader-email@example.com"; // Replace with actual leader email
             try {
-                const { data } = await fetchLeaderAuctions(leaderId);
+                const { data } = await fetchLeaderAuctions(leaderEmail);
                 setAuctions(data);
             } catch (error) {
                 console.error('Error fetching auctions:', error);
@@ -62,8 +61,10 @@ const LeaderDashboard = () => {
             formData.append('numTeams', newAuction.numTeams);
             formData.append('totalPoints', newAuction.totalPoints);
             formData.append('image', image); // Add image file to FormData
-    
-            await createAuction(formData); // Send FormData instead of JSON
+            formData.append('players', JSON.stringify(newAuction.players));
+
+            const { data: createdAuction } = await createAuction(formData);
+            setAuctions([...auctions, createdAuction]); // Append new auction to the state
             alert('Auction created successfully!');
             setShowForm(false);
         } catch (error) {
@@ -71,10 +72,7 @@ const LeaderDashboard = () => {
         }
     };
 
-
-
     return (
-        
         <div>
             <h2>Leader Dashboard</h2>
             <button onClick={() => setShowForm(!showForm)}>
@@ -140,41 +138,22 @@ const LeaderDashboard = () => {
                         value={player.picture}
                         onChange={handlePlayerChange}
                     />
-                       <input
-            type="file"
-            name="image"
-            onChange={handleImageChange}
-            accept="image/*"
-        />
-                    <button type="button" onClick={addPlayer}>
-                        Add Player
-                    </button>
+                    <button type="button" onClick={addPlayer}>Add Player</button>
+
+                    <input type="file" onChange={handleImageChange} />
 
                     <button type="submit">Create Auction</button>
                 </form>
             )}
 
-            {/* Display existing auctions */}
-            {!showForm && (
-                <div>
-                    <h3>My Auctions</h3>
-                    {auctions.length > 0 ? (
-                        <ul>
-                            {auctions.map((auction) => (
-                                <li key={auction._id}>
-                                    <h4>{auction.tournamentName}</h4>
-                                    <p>Date: {new Date(auction.tournamentDate).toLocaleDateString()}</p>
-                                    <p>Teams: {auction.numTeams}</p>
-                                    <p>Total Points: {auction.totalPoints}</p>
-                                    <button onClick={() => alert('Start Bidding')}>Start Bidding</button>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No auctions created yet.</p>
-                    )}
-                </div>
-            )}
+            <h3>Existing Auctions</h3>
+            <ul>
+                {auctions.map((auction) => (
+                    <li key={auction._id}>
+                        {auction.tournamentName} - {auction.tournamentDate}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
