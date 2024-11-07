@@ -18,6 +18,7 @@ const Login = () => {
         try {
             const { data } = await loginUser(formData);  // Send role along with email and password
             login(data.user);  // Set the user data to the context
+            localStorage.setItem('userEmail', formData.email);  // Store email in local storage
             if (formData.role === 'viewer') navigate('/viewer-dashboard');
             else if (formData.role === 'leader') navigate('/payment');
             else if (formData.role === 'admin') navigate('/admin-dashboard');
@@ -26,8 +27,7 @@ const Login = () => {
             console.error("Login Error:", error);
         }
     };
-    
-    
+
     return (
         <div className="login-container">
             <h2>Log In to CrickBidders</h2>
