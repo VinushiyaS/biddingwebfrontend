@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AdminSidebar from '../components/AdminSidebar';
 
 const AdminDashboard = () => {
     const [leaders, setLeaders] = useState([]);
@@ -48,7 +49,8 @@ const AdminDashboard = () => {
                     <tr>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Subscription</th>
+                        <th>Payment</th>
+                        <th>Verification</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,7 +58,7 @@ const AdminDashboard = () => {
                         <tr key={user._id}>
                             <td>{user.email}</td>
                             <td>{user.role}</td>
-                            <td>{user.subscription}</td>
+                            <td>{user.payment}</td>
                         </tr>
                     ))}
                 </tbody>

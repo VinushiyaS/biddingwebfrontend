@@ -1,13 +1,28 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { loginUser } from '../api';
+import { loginUser, getUserRole } from '../api';  // Assuming getUserRole is defined in ../api
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
-    const [formData, setFormData] = useState({ email: '', password: '', role: 'viewer' });
+    const [formData, setFormData] = useState({ email: '', password: '' });
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        const fetchUserRole = async () => {
+            const storedEmail = localStorage.getItem('userEmail');
+            if (storedEmail) {
+                try {
+                    const { data } = await getUserRole(storedEmail);  // API call to get user role by email
+                    localStorage.setItem('role', data.role);  // Store role in local storage
+                } catch (err) {
+                    console.error('Failed to fetch user role:', err);
+                }
+            }
+        };
+        fetchUserRole();
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,15 +31,17 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await loginUser(formData);  // Send role along with email and password
-            login(data.user);  // Set the user data to the context
+            const { data } = await loginUser(formData);
+            login(data.user);
             localStorage.setItem('userEmail', formData.email);  // Store email in local storage
-            if (formData.role === 'viewer') navigate('/viewer-dashboard');
-            else if (formData.role === 'leader') navigate('/payment');
-            else if (formData.role === 'admin') navigate('/admin-dashboard');
-        } catch (error) {
-            setError("Login failed. Please check your credentials.");
-            console.error("Login Error:", error);
+
+            // Fetch and set the user role in local storage
+            const roleResponse = await getUserRole(formData.email);
+            localStorage.setItem('role', roleResponse.data.role);
+
+            navigate('/viewer-dashboard');
+        } catch (err) {
+            setError('Login failed. Please check your credentials and try again.');
         }
     };
 
@@ -46,11 +63,7 @@ const Login = () => {
                     placeholder="Password" 
                     required 
                 />
-                <select name="role" onChange={handleChange}>
-                    <option value="viewer">Viewer</option>
-                    <option value="leader">Leader</option>
-                    <option value="admin">Admin</option>
-                </select>
+               
                 {error && <p className="error">{error}</p>}
                 <button type="submit">Log In</button>
             </form>

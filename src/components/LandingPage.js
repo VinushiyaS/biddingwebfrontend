@@ -1,14 +1,13 @@
 // src/components/LandingPage.js
 import React from 'react';
 import { Link } from 'react-router-dom'; // Add this import
-import Navbar from './Navbar';
-import Footer from './Footer';
+
 
 const LandingPage = () => {
     return (
         <div className="landing-page">
             <div className="landing-image">
-                <img src="./images/crickpost-removebg-preview.png" alt="Cricket Auction" className="landing-image" />
+                <img src="./images/image.png" alt="Cricket Auction" className="landing-image" />
             </div>
             <main className="main-content">
                 <h1>Welcome to CrickBidders</h1>

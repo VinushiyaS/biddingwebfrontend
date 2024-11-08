@@ -8,6 +8,8 @@ import Login from './components/Login';
 import ViewerDashboard from './components/ViewerDashboard';
 import LeaderDashboard from './components/LeaderDashboard';
 import AdminDashboard from './components/AdminDashboard';
+import AdminSidebar from './components/AdminSidebar';
+
 import PaymentPage from './components/PaymentPage';
 import Navbar from './components/Navbar';
 import AboutUs from './components/AboutUs';
@@ -26,7 +28,9 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/viewer-dashboard" element={<ViewerDashboard />} />
                     <Route path="/leader-dashboard" element={<LeaderDashboard />} />
-                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                    <Route path="/admin-sidebar" element={<AdminDashboard />} />
+                    <Route path="/admin-dashboard" element={<AdminSidebar />} />
+
                     <Route path="/payment" element={<PaymentPage />} />
                     <Route path="/aboutus" element={<AboutUs />} />
                     <Route path="/navbar" element={<Navbar />} />
