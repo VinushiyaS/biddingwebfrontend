@@ -12,7 +12,7 @@ export const loginUser = (userData) => API.post('/auth/login', userData);
 export const getUserRole = (email) => API.get(`/auth/user/${email}`);
 
 // Auction APIs
-export const fetchAuctions = () => API.get('/auctions');
+export const fetchAuctions = () => API.get('/auctions/auction');
 export const fetchLeaderAuctions = (leaderEmail) => API.get(`/auctions/leader/${leaderEmail}`);
 export const createAuction = (auctionData) => API.post('/auctions/create-auction', auctionData, {
     headers: {
@@ -22,4 +22,4 @@ export const createAuction = (auctionData) => API.post('/auctions/create-auction
 
 // Payment and Summary APIs
 export const processPayment = (paymentData) => API.post('/payment', paymentData);
-export const fetchSummary = (auctionId) => API.get(`/auction/${auctionId}/summary`);
+// export const fetchSummary = (auctionId) => API.get(`/auction/${auctionId}/summary`);

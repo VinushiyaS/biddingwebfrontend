@@ -18,15 +18,24 @@ const Navbar = () => {
         navigate('/');
     };
 
+    // Handle scrolling to the sections
+    const scrollToSection = (sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <header className="navbar">
-            <h2 className="logo">CrickBidders</h2>
-            <nav className="nav-links">
+ <Link to="/" className="logo-link">
+                <img src="/images/FINalLogo.png" alt="CrickBidders Logo" className="logo" />
+            </Link>            <nav className="nav-links">
                 <Link to="/" className="nav-link">Home</Link>
                 
                 {/* Show the Leader link if the user role is either "leader" or "admin" */}
                 {(userRole === 'leader' || userRole === 'admin') && (
-                    <Link to="/leader-dashboard" className="nav-link">Leader</Link>
+                    <Link to="/payment" className="nav-link">Leader</Link>
                 )}
 
                 {/* Show the Admin link only if the user role is "admin" */}
@@ -39,12 +48,14 @@ const Navbar = () => {
                     <button onClick={handleLogout} className="nav-link logout-button">Logout</button>
                 ) : (
                     <>
-                        <Link to="/signup" className="nav-link">Sign Up</Link>
                         <Link to="/login" className="nav-link">Log In</Link>
                     </>
                 )}
                 
-                <Link to="/aboutus" className="nav-link">About Us</Link>
+                <button onClick={() => scrollToSection('about')} className="nav-link">About</button> {/* Scroll to About Section */}
+                <button onClick={() => scrollToSection('how-to-use')} className="nav-link">How</button> {/* Scroll to How Section */}
+                <button onClick={() => scrollToSection('contact')} className="nav-link">Contact Us</button> {/* Scroll to Contact Section */}
+
             </nav>
         </header>
     );

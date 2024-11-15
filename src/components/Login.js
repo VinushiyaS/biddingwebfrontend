@@ -4,7 +4,7 @@ import { loginUser, getUserRole } from '../api';  // Assuming getUserRole is def
 import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
-    const [formData, setFormData] = useState({ email: '', password: '' });
+    const [formData, setFormData] = useState({ email: '', password: '', role: 'viewer' });
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
     const [error, setError] = useState('');
@@ -25,21 +25,31 @@ const Login = () => {
     }, []);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const { email, password } = formData;
+
+        // Check if the email and password match the admin credentials
+        if (email === 'vinushiya779@gmail.com' && password === 'Melvin@2002') {
+            formData.role = 'admin';  // Automatically assign 'admin' role
+        }
+
         try {
             const { data } = await loginUser(formData);
             login(data.user);
-            localStorage.setItem('userEmail', formData.email);  // Store email in local storage
+            localStorage.setItem('userEmail', email);  // Store email in local storage
+            localStorage.setItem('role', formData.role);  // Store selected role in local storage
 
-            // Fetch and set the user role in local storage
-            const roleResponse = await getUserRole(formData.email);
-            localStorage.setItem('role', roleResponse.data.role);
-
-            navigate('/viewer-dashboard');
+            // Navigate based on role
+            if (formData.role === 'admin') {
+                navigate('/viewer-dashboard');
+            } else {
+                navigate('/viewer-dashboard');
+            }
         } catch (err) {
             setError('Login failed. Please check your credentials and try again.');
         }
@@ -63,6 +73,15 @@ const Login = () => {
                     placeholder="Password" 
                     required 
                 />
+                <select 
+                    name="role" 
+                    value={formData.role} 
+                    onChange={handleChange} 
+                    required
+                >
+                    <option value="viewer">Viewer</option>
+                    <option value="leader">Leader</option>
+                </select>
                
                 {error && <p className="error">{error}</p>}
                 <button type="submit">Log In</button>

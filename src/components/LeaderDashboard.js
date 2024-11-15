@@ -1,309 +1,135 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios'; // Importing axios
-// import { fetchLeaderAuctions } from '../api';
-
-// const LeaderDashboard = () => {
-//     const [auctions, setAuctions] = useState([]);
-//     const [showForm, setShowForm] = useState(false);
-//     const [newAuction, setNewAuction] = useState({
-//         tournamentName: '',
-//         tournamentDate: '',
-//         numTeams: '',
-//         totalPoints: '',
-//         players: []
-//     });
-//     const [player, setPlayer] = useState({ name: '', number: '', picture: '' });
-//     const [image, setImage] = useState(null);
-
-//     // Fetch existing auctions for this leader on component mount
-//     useEffect(() => {
-//         const getLeaderAuctions = async () => {
-//             const leaderEmail = localStorage.getItem('userEmail'); // Retrieve leader email from local storage
-//             if (!leaderEmail) {
-//                 console.error('Leader email not found in local storage');
-//                 return;
-//             }
-//             try {
-//                 const { data } = await fetchLeaderAuctions(leaderEmail);
-//                 setAuctions(data);
-//             } catch (error) {
-//                 console.error('Error fetching auctions:', error);
-//             }
-//         };
-//         getLeaderAuctions();
-//     }, []);
-
-//     // Handle changes for auction form
-//     const handleAuctionChange = (e) => {
-//         setNewAuction({ ...newAuction, [e.target.name]: e.target.value });
-//     };
-
-//     // Handle changes for adding players to the auction
-//     const handlePlayerChange = (e) => {
-//         setPlayer({ ...player, [e.target.name]: e.target.value });
-//     };
-
-//     // Add a player to the players array
-//     const addPlayer = () => {
-//         if (!player.name || !player.number) {
-//             alert("Please fill out all player fields.");
-//             return;
-//         }
-//         setNewAuction((prev) => ({
-//             ...prev,
-//             players: [...prev.players, player]
-//         }));
-//         setPlayer({ name: '', number: '', picture: '' }); // Reset player form
-//     };
-
-//     const handleImageChange = (e) => {
-//         setImage(e.target.files[0]);
-//     };
-
-//     const handleCreateAuction = async (e) => {
-//         e.preventDefault();
-
-//         // Create FormData to send to the backend
-//         const formData = new FormData();
-//         formData.append('leaderEmail', localStorage.getItem('userEmail')); // Add leader email
-//         formData.append('tournamentName', newAuction.tournamentName);
-//         formData.append('tournamentDate', newAuction.tournamentDate);
-//         formData.append('teamsCount', newAuction.numTeams);
-//         formData.append('totalPointsPerTeam', newAuction.totalPoints);
-//         formData.append('image', image); // Include the image file in the FormData
-//         formData.append('players', JSON.stringify(newAuction.players)); // Include players as a stringified JSON
-
-//         try {
-//             // Send FormData to the backend using axios
-//             const response = await axios.post('http://localhost:5000/api/auctions/create-auction', formData);
-
-//             const result = response.data;
-
-//             if (response.status === 200) {
-//                 setAuctions([...auctions, result]);
-//                 alert('Auction created successfully!');
-//                 setShowForm(false);
-//             } else {
-//                 alert('Failed to create auction');
-//                 console.error('Error:', result);
-//             }
-//         } catch (error) {
-//             console.error('Error creating auction:', error);
-//             alert('Error creating auction');
-//         }
-//     };
-
-//     return (
-//         <div>
-//             <h2>Leader Dashboard</h2>
-//             <button onClick={() => setShowForm(!showForm)}>
-//                 {showForm ? 'Cancel' : 'Create New Auction'}
-//             </button>
-//             <button onClick={() => setShowForm(false)}>View My Auctions</button>
-
-//             {/* Auction creation form */}
-//             {showForm && (
-//                 <form onSubmit={handleCreateAuction} encType="multipart/form-data">
-//                     <h3>Create New Auction</h3>
-//                     <input
-//                         type="text"
-//                         name="tournamentName"
-//                         placeholder="Tournament Name"
-//                         value={newAuction.tournamentName}
-//                         onChange={handleAuctionChange}
-//                         required
-//                     />
-//                     <input
-//                         type="date"
-//                         name="tournamentDate"
-//                         value={newAuction.tournamentDate}
-//                         onChange={handleAuctionChange}
-//                         required
-//                     />
-//                     <input
-//                         type="number"
-//                         name="numTeams"
-//                         placeholder="Number of Teams"
-//                         value={newAuction.numTeams}
-//                         onChange={handleAuctionChange}
-//                         required
-//                     />
-//                     <input
-//                         type="number"
-//                         name="totalPoints"
-//                         placeholder="Total Points for Teams"
-//                         value={newAuction.totalPoints}
-//                         onChange={handleAuctionChange}
-//                         required
-//                     />
-
-//                     <h4>Add Players</h4>
-//                     <input
-//                         type="text"
-//                         name="name"
-//                         placeholder="Player Name"
-//                         value={player.name}
-//                         onChange={handlePlayerChange}
-//                     />
-//                     <input
-//                         type="text"
-//                         name="number"
-//                         placeholder="Player Number"
-//                         value={player.number}
-//                         onChange={handlePlayerChange}
-//                     />
-//                     <input
-//                         type="text"
-//                         name="picture"
-//                         placeholder="Player Picture URL"
-//                         value={player.picture}
-//                         onChange={handlePlayerChange}
-//                     />
-//                     <input type="file" onChange={handleImageChange} />
-
-//                     <button type="button" onClick={addPlayer}>Add Player</button>
-
-//                     <button type="submit">Create Auction</button>
-//                 </form>
-//             )}
-
-//             <h3>Existing Auctions</h3>
-//             <ul>
-//                 {auctions.map((auction) => (
-//                     <li key={auction._id}>
-//                         {auction.tournamentName} - {auction.tournamentDate}
-//                     </li>
-//                 ))}
-//             </ul>
-//         </div>
-//     );
-// };
-
-// export default LeaderDashboard;
-
 import React, { useState } from 'react';
-import axios from 'axios';
 
 export default function LeaderDashboard() {
-  const [auctionData, setAuctionData] = useState({
+  const [formData, setFormData] = useState({
     leaderEmail: '',
     tournamentName: '',
-    tournamentDate: '',
     teamsCount: 0,
-    totalPointsPerTeam: 0,
-    players: [
-      {
-        name: '',
-        number: 0,
-        team: '',
-        bidPoints: 0,
-        profilePic: '',
-      },
-    ],
-    image: null, // For handling the uploaded image
+    bidPointsPerTeam: 0,
+    teams: [],
+    players: [], // Array for player profiles
   });
 
-  // Function to handle input change
+  const [submittedData, setSubmittedData] = useState(null); // To hold the submitted data
+
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setAuctionData({
-      ...auctionData,
-      [name]: value,
-    });
-  };
+    const newValue = name === 'teamsCount' || name === 'bidPointsPerTeam' ? parseInt(value) : value;
 
-  // Handle file input change
-  const handleImageChange = (e) => {
-    setAuctionData({
-      ...auctionData,
-      image: e.target.files[0], // Store the selected image file
-    });
-  };
-
-  // Function to handle player input change
-  const handlePlayerChange = (e, index) => {
-    const { name, value } = e.target;
-    const updatedPlayers = [...auctionData.players];
-    updatedPlayers[index] = { ...updatedPlayers[index], [name]: value };
-    setAuctionData({
-      ...auctionData,
-      players: updatedPlayers,
-    });
-  };
-
-  // Function to add a new player form
-  const addPlayer = () => {
-    setAuctionData({
-      ...auctionData,
-      players: [
-        ...auctionData.players,
-        {
-          name: '',
-          number: 0,
-          team: '',
-          bidPoints: 0,
-          profilePic: '',
-        },
-      ],
-    });
-  };
-
-  // Function to remove a player form
-  const removePlayer = (index) => {
-    const updatedPlayers = auctionData.players.filter((_, i) => i !== index);
-    setAuctionData({
-      ...auctionData,
-      players: updatedPlayers,
-    });
-  };
-
-  // Function to handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const formData = new FormData();
-      formData.append('leaderEmail', auctionData.leaderEmail);
-      formData.append('tournamentName', auctionData.tournamentName);
-      formData.append('tournamentDate', auctionData.tournamentDate);
-      formData.append('teamsCount', auctionData.teamsCount);
-      formData.append('totalPointsPerTeam', auctionData.totalPointsPerTeam);
-
-      // Append players array
-      auctionData.players.forEach((player, index) => {
-        formData.append(`players[${index}][name]`, player.name);
-        formData.append(`players[${index}][number]`, player.number);
-        formData.append(`players[${index}][team]`, player.team);
-        formData.append(`players[${index}][bidPoints]`, player.bidPoints);
-        formData.append(`players[${index}][profilePic]`, player.profilePic);
-      });
-
-      // Add image if available
-      if (auctionData.image) {
-        formData.append('image', auctionData.image);
+    setFormData((prevData) => {
+      if (name === 'teamsCount') {
+        const updatedTeams = Array.from({ length: newValue || 0 }, (_, index) => ({
+          name: prevData.teams[index]?.name || '',
+          bidPoints: prevData.bidPointsPerTeam || 0,
+          remainingBidPoints: prevData.bidPointsPerTeam || 0, // Initialize remaining bid points
+        }));
+        return {
+          ...prevData,
+          teamsCount: newValue,
+          teams: updatedTeams,
+        };
       }
 
-      const response = await axios.post('http://localhost:5000/api/auctions/create-auction', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      if (name === 'bidPointsPerTeam') {
+        const updatedTeams = prevData.teams.map((team) => ({
+          ...team,
+          bidPoints: newValue || 0,
+          remainingBidPoints: newValue || 0, 
+        }));
+        return {
+          ...prevData,
+          bidPointsPerTeam: newValue,
+          teams: updatedTeams,
+        };
+      }
 
-      // Handle response after success
-      console.log('Auction created successfully', response.data);
-    } catch (error) {
-      console.error('Error creating auction:', error);
+      return {
+        ...prevData,
+        [name]: newValue,
+      };
+    });
+  };
+
+  const handleTeamChange = (index, value) => {
+    const updatedTeams = [...formData.teams];
+    updatedTeams[index] = {
+      ...updatedTeams[index],
+      name: value,
+    };
+    setFormData({
+      ...formData,
+      teams: updatedTeams,
+    });
+  };
+
+  const handlePlayerChange = (index, field, value) => {
+    const updatedPlayers = [...formData.players];
+    updatedPlayers[index] = {
+      ...updatedPlayers[index],
+      [field]: value,
+    };
+    setFormData({
+      ...formData,
+      players: updatedPlayers,
+    });
+  };
+
+  const addPlayer = () => {
+    setFormData({
+      ...formData,
+      players: [...formData.players, { name: '', photo: null, bidAmount: 0, team: '', done: false }],
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmittedData(formData);
+  };
+
+  const handleDone = (index) => {
+    const updatedPlayers = [...formData.players];
+    const player = updatedPlayers[index];
+
+    if (player.team && player.bidAmount > 0) {
+      const teamIndex = formData.teams.findIndex((team) => team.name === player.team);
+
+      if (teamIndex !== -1 && formData.teams[teamIndex].remainingBidPoints >= player.bidAmount) {
+        // Mark player as done
+        updatedPlayers[index].done = true;
+
+        // Subtract bid amount from team's remaining bid points
+        const updatedTeams = [...formData.teams];
+        updatedTeams[teamIndex].remainingBidPoints -= player.bidAmount;
+
+        // Update form data
+        setFormData({
+          ...formData,
+          players: updatedPlayers,
+          teams: updatedTeams,
+        });
+      } else {
+        alert("Insufficient points for this team.");
+      }
     }
+  };
+
+  // Function to get the player with the highest bid amount
+  const getHighestBidPlayer = () => {
+    return formData.players.reduce((highest, player) =>
+      player.bidAmount > (highest?.bidAmount || 0) ? player : highest,
+      null
+    );
   };
 
   return (
     <div>
-      <h1>Create New Auction</h1>
+      <h1>Leader Dashboard</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
           name="leaderEmail"
-          value={auctionData.leaderEmail}
+          value={formData.leaderEmail}
           onChange={handleChange}
           placeholder="Leader Email"
           required
@@ -311,93 +137,147 @@ export default function LeaderDashboard() {
         <input
           type="text"
           name="tournamentName"
-          value={auctionData.tournamentName}
+          value={formData.tournamentName}
           onChange={handleChange}
           placeholder="Tournament Name"
           required
         />
         <input
-          type="date"
-          name="tournamentDate"
-          value={auctionData.tournamentDate}
-          onChange={handleChange}
-          required
-        />
-        <input
           type="number"
           name="teamsCount"
-          value={auctionData.teamsCount}
+          value={formData.teamsCount}
           onChange={handleChange}
-          placeholder="Teams Count"
+          placeholder="Number of Teams"
           required
         />
         <input
           type="number"
-          name="totalPointsPerTeam"
-          value={auctionData.totalPointsPerTeam}
+          name="bidPointsPerTeam"
+          value={formData.bidPointsPerTeam}
           onChange={handleChange}
-          placeholder="Total Points Per Team"
+          placeholder="Bid Points Per Team"
           required
         />
 
-        {/* Render Player Info dynamically */}
         <div>
-          <h3>Player Info</h3>
-          {auctionData.players.map((player, index) => (
+          <h3>Team Names</h3>
+          {formData.teams.map((team, index) => (
             <div key={index}>
-              <h4>Player {index + 1}</h4>
               <input
                 type="text"
-                name="name"
-                value={player.name}
-                onChange={(e) => handlePlayerChange(e, index)}
-                placeholder="Player Name"
+                value={team.name}
+                onChange={(e) => handleTeamChange(index, e.target.value)}
+                placeholder={`Team ${index + 1} Name`}
                 required
               />
-              <input
-                type="number"
-                name="number"
-                value={player.number}
-                onChange={(e) => handlePlayerChange(e, index)}
-                placeholder="Player Number"
-                required
-              />
-              <input
-                type="text"
-                name="team"
-                value={player.team}
-                onChange={(e) => handlePlayerChange(e, index)}
-                placeholder="Player Team"
-                required
-              />
-              <input
-                type="number"
-                name="bidPoints"
-                value={player.bidPoints}
-                onChange={(e) => handlePlayerChange(e, index)}
-                placeholder="Bid Points"
-                required
-              />
-              <input
-                type="text"
-                name="profilePic"
-                value={player.profilePic}
-                onChange={(e) => handlePlayerChange(e, index)}
-                placeholder="Profile Picture URL"
-              />
-              <button type="button" onClick={() => removePlayer(index)}>Remove Player</button>
+              <span> - Remaining Points: {team.remainingBidPoints}</span>
             </div>
           ))}
-          <button type="button" onClick={addPlayer}>Add Another Player</button>
         </div>
 
-        {/* Image Upload */}
-        <input
-          type="file"
-          onChange={handleImageChange}
-        />
-        <button type="submit">Create Auction</button>
+        <div>
+          <h3>Players</h3>
+          {formData.players.map((player, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <input
+                type="text"
+                value={player.name}
+                onChange={(e) => handlePlayerChange(index, 'name', e.target.value)}
+                placeholder={`Player ${index + 1} Name`}
+                required
+                disabled={player.done}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handlePlayerChange(index, 'photo', e.target.files[0])}
+                disabled={player.done}
+              />
+              <select
+                value={player.team}
+                onChange={(e) => handlePlayerChange(index, 'team', e.target.value)}
+                disabled={player.done}
+              >
+                <option value="">Select Team</option>
+                {formData.teams.map((team, idx) => (
+                  <option key={idx} value={team.name}>
+                    {team.name}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                value={player.bidAmount}
+                onChange={(e) => handlePlayerChange(index, 'bidAmount', parseInt(e.target.value) || 0)}
+                placeholder="Bid Amount"
+                disabled={player.done}
+              />
+              <button
+                type="button"
+                onClick={() => handleDone(index)}
+                disabled={player.done || !player.team || player.bidAmount <= 0}
+              >
+                {player.done ? 'Done' : 'Mark as Done'}
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={addPlayer}>Add Player</button>
+        </div>
+
+        <button type="submit">Submit Tournament</button>
       </form>
+
+      {submittedData && (
+        <div>
+          <h2>Tournament Information</h2>
+          <h3>Tournament: {submittedData.tournamentName}</h3>
+          <h4>Teams</h4>
+          {submittedData.teams.map((team, index) => (
+            <div key={index}>
+              <h5>{team.name}</h5>
+              <p>Remaining Points: {team.remainingBidPoints}</p>
+            </div>
+          ))}
+
+          <h4>Players</h4>
+          {submittedData.players.map((player, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <p>Name: {player.name}</p>
+              {player.photo ? (
+                <img
+                  src={URL.createObjectURL(player.photo)}
+                  alt={`Player ${index + 1} Photo`}
+                  style={{ width: '100px', height: '100px', borderRadius: '50%' }}
+                />
+              ) : (
+                <p>No Photo Selected</p>
+              )}
+              <p>Team: {player.team}</p>
+              <p>Bid Amount: {player.bidAmount}</p>
+              <p>Status: {player.done ? "Done" : "Pending"}</p>
+            </div>
+          ))}
+
+          {/* Displaying the player with the highest bid */}
+          <h4>Top Bid Player</h4>
+          {getHighestBidPlayer() ? (
+            <div>
+              <p>Name: {getHighestBidPlayer().name}</p>
+              <p>Team: {getHighestBidPlayer().team}</p>
+              <p>Bid Amount: {getHighestBidPlayer().bidAmount}</p>
+              {getHighestBidPlayer().photo && (
+                <img
+                  src={URL.createObjectURL(getHighestBidPlayer().photo)}
+                  alt="Top Player Photo"
+                  style={{ width: '100px', height: '100px', borderRadius: '50%' }}
+                />
+              )}
+            </div>
+          ) : (
+            <p>No players with bids yet.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

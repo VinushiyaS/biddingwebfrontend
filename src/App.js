@@ -32,7 +32,6 @@ function App() {
                     <Route path="/admin-dashboard" element={<AdminSidebar />} />
 
                     <Route path="/payment" element={<PaymentPage />} />
-                    <Route path="/aboutus" element={<AboutUs />} />
                     <Route path="/navbar" element={<Navbar />} />
 
                 </Routes>
