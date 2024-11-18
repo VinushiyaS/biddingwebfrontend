@@ -1,12 +1,23 @@
-// src/components/Signup.js
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { registerUser } from '../api';
 
-const Signup = () => {
+const Signup = ({ onClose }) => {
     const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    
+    const isValidEmail = (email) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|.+\.life|.+\.lk)$/;
+        return emailRegex.test(email);
+    };
+
+    const isValidPassword = (password) => {
+        const passwordRegex = /^[A-Z][a-zA-Z0-9!@#$%^&*]{6}[A-Z]$/;
+        const symbolCount = (password.match(/[!@#$%^&*]/g) || []).length;
+        return passwordRegex.test(password) && symbolCount >= 2;
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,54 +27,87 @@ const Signup = () => {
         e.preventDefault();
         setError('');
 
-        // Check if passwords match
-        if (formData.password !== formData.confirmPassword) {
-            setError('Passwords do not match');
+        const { email, password, confirmPassword } = formData;
+
+        if (!isValidEmail(email)) {
+            setError('Invalid email. Please use @gmail.com, .life, or .lk domains.');
+            return;
+        }
+
+        if (!isValidPassword(password)) {
+            setError('Password must be exactly 8 characters, start and end with uppercase letters, and include at least 2 symbols.');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match.');
             return;
         }
 
         try {
-            await registerUser({ email: formData.email, password: formData.password, role: 'viewer' });
+            await registerUser({ email, password, role: 'viewer' });
             navigate('/viewer-dashboard');
+            onClose(); 
         } catch (error) {
-            console.error("Registration failed", error);
+            console.error('Registration failed', error);
             setError('Registration failed. Please try again.');
         }
     };
 
     return (
-        <div className="signup-container">
-            <h2>Create an Account</h2>
-            <form onSubmit={handleSubmit} className="signup-form">
-                <input 
-                    type="email" 
-                    name="email" 
-                    onChange={handleChange} 
-                    placeholder="Email" 
-                    required 
-                    className="signup-input"
+        <form onSubmit={handleSubmit}>
+            <div className="form-group mb-3">
+                <label htmlFor="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="form-control"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
                 />
-                <input 
-                    type="password" 
-                    name="password" 
-                    onChange={handleChange} 
-                    placeholder="Password" 
-                    required 
-                    className="signup-input"
+            </div>
+            <div className="form-group mb-3">
+                <label htmlFor="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="form-control"
+                    placeholder="Enter your password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
                 />
-                <input 
-                    type="password" 
-                    name="confirmPassword" 
-                    onChange={handleChange} 
-                    placeholder="Confirm Password" 
-                    required 
-                    className="signup-input"
+            </div>
+            <div className="form-group mb-4">
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    className="form-control"
+                    placeholder="Confirm your password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
                 />
-                {error && <p className="error-message">{error}</p>}
-                <button type="submit" className="signup-button">Sign Up</button>
-            </form>
-            <p>Already have an account? <Link to="/login" className="login-link">Log In</Link></p>
-        </div>
+            </div>
+            {error && <div className="alert alert-danger">{error}</div>}
+            <button
+                type="submit"
+                className="btn"
+                style={{
+                    backgroundColor: '#040c0e',
+                    color: 'white',
+                    width: '100%'
+                }}
+            >
+                Sign Up
+            </button>
+        </form>
     );
 };
 

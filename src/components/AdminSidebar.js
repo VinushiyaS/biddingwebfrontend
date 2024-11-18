@@ -1,27 +1,36 @@
-// src/components/AdminSidebar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const AdminSidebar = () => {
     return (
-        <aside className="admin-sidebar">
-            <h3 className="sidebar-title">Admin Dashboard</h3>
+        <aside className="admin-sidebar bg-light p-4 border-end" style={{ width: '250px', height: '100vh' }}>
+            <h3 className="sidebar-title text-dark mb-4">Admin Dashboard</h3>
             <nav className="sidebar-nav">
-                <ul>
-                    <li>
-                        <Link to="/admin-sidebar" className="sidebar-link">Dashboard Overview</Link>
+                <ul className="nav flex-column">
+                    <li className="nav-item">
+                        <Link to="/admin-sidebar" className="nav-link sidebar-link text-dark">
+                            Dashboard Overview
+                        </Link>
                     </li>
-                    <li>
-                        <Link to="/admin-dashboard/users" className="sidebar-link">Users</Link>
+                    <li className="nav-item">
+                        <Link to="/admin-sidebar" className="nav-link sidebar-link text-dark">
+                            Users
+                        </Link>
                     </li>
-                    <li>
-                        <Link to="/admin-dashboard/auctions" className="sidebar-link">Manage Auctions</Link>
+                    <li className="nav-item">
+                        <Link to="/admin-sidebar" className="nav-link sidebar-link text-dark">
+                            Manage Auctions
+                        </Link>
                     </li>
-                    <li>
-                        <Link to="/admin-dashboard/reports" className="sidebar-link">Reports</Link>
+                    <li className="nav-item">
+                        <Link to="/admin-sidebar" className="nav-link sidebar-link text-dark">
+                            Reports
+                        </Link>
                     </li>
-                    <li>
-                        <Link to="/admin-dashboard/settings" className="sidebar-link">Settings</Link>
+                    <li className="nav-item">
+                        <Link to="/admin-sidebar" className="nav-link sidebar-link text-dark">
+                            Settings
+                        </Link>
                     </li>
                 </ul>
             </nav>

@@ -13,7 +13,7 @@ const CheckoutForm = () => {
     const [succeeded, setSucceeded] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [amount] = useState(1000); // Set the amount here
+    const [amount] = useState(3400); // Set the amount here
     const stripe = useStripe();
     const elements = useElements();
     const navigate = useNavigate();
@@ -59,44 +59,50 @@ const CheckoutForm = () => {
     };
 
     return (
-        <div className="payment-page">
-            <h2>Complete Your Payment</h2>
-            <form onSubmit={handleSubmit} className="payment-form">
-                <div className="form-group">
-                    <label>Name</label>
-                    <input 
-                        type="text" 
-                        value={name} 
-                        onChange={(e) => setName(e.target.value)} 
-                        placeholder="Full Name" 
-                        required 
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input 
-                        type="email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        placeholder="Email Address" 
-                        required 
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Card Details</label>
-                    <div className="card-element">
-                        <CardElement />
+        <div className="container d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: '#99EDC3' }}>
+            <div className="card shadow-sm p-4" style={{ width: '100%', maxWidth: '400px' }}>
+                <h2 className="text-center mb-4">Complete Your Payment</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="name" className="form-label">Name</label>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            id="name" 
+                            value={name} 
+                            onChange={(e) => setName(e.target.value)} 
+                            placeholder="Full Name" 
+                            required 
+                        />
                     </div>
-                </div>
-                <button 
-                    type="submit" 
-                    className="pay-button" 
-                    disabled={!stripe || isProcessing || succeeded}>
-                    {isProcessing ? 'Processing…' : 'Pay ₹2750'}
-                </button>
-            </form>
-            {error && <div className="error-message">{error}</div>}
-            {succeeded && <div className="success-message">Payment successful!</div>}
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input 
+                            type="email" 
+                            className="form-control" 
+                            id="email" 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)} 
+                            placeholder="Email Address" 
+                            required 
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="card-details" className="form-label">Card Details</label>
+                        <div id="card-details" className="form-control p-2">
+                            <CardElement />
+                        </div>
+                    </div>
+                    <button 
+                        type="submit" 
+                        className="btn btn-dark w-100" 
+                        disabled={!stripe || isProcessing || succeeded}>
+                        {isProcessing ? 'Processing…' : `Pay ₹${amount}`}
+                    </button>
+                </form>
+                {error && <div className="alert alert-danger mt-3">{error}</div>}
+                {succeeded && <div className="alert alert-success mt-3">Payment successful!</div>}
+            </div>
         </div>
     );
 };

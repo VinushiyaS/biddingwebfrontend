@@ -1,64 +1,106 @@
 import React from 'react';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  FaSignOutAlt,
+  FaHome,
+  FaUser,
+  FaShieldAlt,
+  FaInfoCircle,
+  FaQuestionCircle,
+  FaEnvelope,
+} from 'react-icons/fa';
 
-const Navbar = () => {
-    const navigate = useNavigate();
-    
-    // Get the user role and email from local storage
-    const userRole = localStorage.getItem('role');
-    const userEmail = localStorage.getItem('userEmail');
+const CustomNavbar = () => {
+  const navigate = useNavigate();
 
-    // Handle logout
-    const handleLogout = () => {
-        // Clear user information from local storage
-        localStorage.removeItem('userEmail');
-        localStorage.removeItem('role');
-        
-        // Redirect to the home page
-        navigate('/');
-    };
+  // Retrieve user role and email from localStorage
+  const userRole = localStorage.getItem('role');
+  const userEmail = localStorage.getItem('userEmail');
 
-    // Handle scrolling to the sections
-    const scrollToSection = (sectionId) => {
-        const section = document.getElementById(sectionId);
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+  // Handle logout
+  const handleLogout = () => {
+    // Clear localStorage
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('role');
 
-    return (
-        <header className="navbar">
- <Link to="/" className="logo-link">
-                <img src="/images/FINalLogo.png" alt="CrickBidders Logo" className="logo" />
-            </Link>            <nav className="nav-links">
-                <Link to="/" className="nav-link">Home</Link>
-                
-                {/* Show the Leader link if the user role is either "leader" or "admin" */}
-                {(userRole === 'leader' || userRole === 'admin') && (
-                    <Link to="/payment" className="nav-link">Leader</Link>
-                )}
+    // Navigate to the home page
+    navigate('/');
+  };
 
-                {/* Show the Admin link only if the user role is "admin" */}
-                {userRole === 'admin' && (
-                    <Link to="/admin-dashboard" className="nav-link">Admin</Link>
-                )}
+  // Smooth scroll to section
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-                {/* Show "Logout" if userEmail and role exist, otherwise show Sign Up and Log In */}
-                {userEmail && userRole ? (
-                    <button onClick={handleLogout} className="nav-link logout-button">Logout</button>
-                ) : (
-                    <>
-                        <Link to="/login" className="nav-link">Log In</Link>
-                    </>
-                )}
-                
-                <button onClick={() => scrollToSection('about')} className="nav-link">About</button> {/* Scroll to About Section */}
-                <button onClick={() => scrollToSection('how-to-use')} className="nav-link">How</button> {/* Scroll to How Section */}
-                <button onClick={() => scrollToSection('contact')} className="nav-link">Contact Us</button> {/* Scroll to Contact Section */}
+  return (
+    <Navbar
+      className="fixed-top"
+      style={{ background: '#040c0e' }}
+      expand="lg"
+      variant="dark"
+    >
+      <Container>
+        {/* Logo on the left */}
+        <Navbar.Brand as={Link} to="/">
+          <img
+            src="/images/logo8.png"
+            alt="CrickBidders Logo"
+            height="30"
+            className="d-inline-block align-top"
+          />
+        </Navbar.Brand>
 
-            </nav>
-        </header>
-    );
+        {/* Center links */}
+        <Navbar.Toggle aria-controls="navbar-content" />
+        <Navbar.Collapse id="navbar-content" className="justify-content-center">
+          <Nav>
+            <Nav.Link as={Link} to="/" className="text-light">
+              <FaHome /> Home
+            </Nav.Link>
+
+            {(userRole === 'leader' || userRole === 'admin') && (
+              <Nav.Link as={Link} to="/payment" className="text-light">
+                <FaUser /> Leader
+              </Nav.Link>
+            )}
+
+            {userRole === 'admin' && (
+              <Nav.Link as={Link} to="/admin-dashboard" className="text-light">
+                <FaShieldAlt /> Admin
+              </Nav.Link>
+            )}
+
+            <Nav.Link onClick={() => scrollToSection('about')} className="text-light">
+              <FaInfoCircle /> About
+            </Nav.Link>
+            <Nav.Link onClick={() => scrollToSection('how-to-use')} className="text-light">
+              <FaQuestionCircle /> Help
+            </Nav.Link>
+            <Nav.Link onClick={() => scrollToSection('contact')} className="text-light">
+              <FaEnvelope /> Contact Us
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+
+        {/* Login/Logout on the right */}
+        <div className="d-flex">
+          {userEmail && userRole ? (
+            <Button variant="outline-light" onClick={handleLogout}>
+              <FaSignOutAlt /> Logout
+            </Button>
+          ) : (
+            <Nav.Link as={Link} to="/login" className="text-light">
+              Log In
+            </Nav.Link>
+          )}
+        </div>
+      </Container>
+    </Navbar>
+  );
 };
 
-export default Navbar;
+export default CustomNavbar;

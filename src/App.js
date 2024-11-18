@@ -14,8 +14,9 @@ import PaymentPage from './components/PaymentPage';
 import Navbar from './components/Navbar';
 import AboutUs from './components/AboutUs';
 import Footer from './components/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './App.css';
+// import './App.css';
 function App() {
     return (
         <AuthProvider>
